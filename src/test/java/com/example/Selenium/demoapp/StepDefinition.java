@@ -32,7 +32,7 @@ public class StepDefinition {
     public static void setUp() throws InterruptedException {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
-        System.setProperty("webdriver.chrome.driver", "C://Driver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
         driver = new ChromeDriver(options);
     }
 
@@ -64,7 +64,7 @@ public class StepDefinition {
 
     @Then("User should see the links {string} in the main menu")
     public void userShouldSeeTheLinksInTheMainMenu(String expectedLinks) {
-        List<WebElement> links = driver.findElements(By.cssSelector(".sc-787d0f47-3 li"));
+        List<WebElement> links = driver.findElements(By.cssSelector("header ul.sc-cd82279d-3 li"));
         assertEquals(expectedLinks, links.get(0).getText() + ", " + links.get(1).getText() + ", " + links.get(2).getText());
     }
 
