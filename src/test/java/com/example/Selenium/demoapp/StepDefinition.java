@@ -32,7 +32,7 @@ public class StepDefinition {
     public static void setUp() throws InterruptedException {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
-        System.setProperty("webdriver.chrome.driver", "C://Driver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
         driver = new ChromeDriver(options);
     }
 
@@ -63,13 +63,15 @@ public class StepDefinition {
     }
 
     @Then("User should see the links {string} in the main menu")
-    public void userShouldSeeTheLinksInTheMainMenu(String expectedLinks) {
-        List<WebElement> links = driver.findElements(By.cssSelector(".sc-787d0f47-3 li"));
+    public void userShouldSeeTheLinksInTheMainMenu(String expectedLinks) throws InterruptedException {
+       // Thread.sleep(5000);
+        List<WebElement> links = driver.findElements(By.cssSelector("header ul.sc-cd82279d-3 li"));
         assertEquals(expectedLinks, links.get(0).getText() + ", " + links.get(1).getText() + ", " + links.get(2).getText());
     }
 
     @Then("User should see the link {string} with correct link text")
-    public void userShouldSeeTheLinkWithCorrectLinkText(String expectedLinkText) {
+    public void userShouldSeeTheLinkWithCorrectLinkText(String expectedLinkText) throws InterruptedException {
+        //Thread.sleep(5000);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         WebElement availabilityLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("Tillgänglighet i SVT Play")));
 
@@ -82,7 +84,8 @@ public class StepDefinition {
     }
 
     @When("User clicks the link Tillgänglighet i SVT Play")
-    public void userClicksTheLinkForAvailabilityInSVTPlay() {
+    public void userClicksTheLinkForAvailabilityInSVTPlay() throws InterruptedException {
+        //Thread.sleep(5000);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         WebElement availabilityLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("Tillgänglighet i SVT Play")));
 
@@ -92,12 +95,14 @@ public class StepDefinition {
     }
 
     @Then("User should see the main heading {string}")
-    public void userShouldSeeTheMainHeading(String expectedHeading) {
+    public void userShouldSeeTheMainHeading(String expectedHeading) throws InterruptedException {
+        Thread.sleep(5000);
         assertEquals(expectedHeading, driver.findElement(By.tagName("h1")).getText());
     }
 
     @When("User clicks the Programs link")
-    public void userNavigatesToTheProgramsPage() {
+    public void userNavigatesToTheProgramsPage() throws InterruptedException {
+        //Thread.sleep(5000);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div[role='main']")));
@@ -107,7 +112,8 @@ public class StepDefinition {
     }
 
     @Then("User should see {int} categories listed")
-    public void userShouldSeeCategoriesListed(int expectedCount) {
+    public void userShouldSeeCategoriesListed(int expectedCount) throws InterruptedException {
+        //Thread.sleep(5000);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement categorySection = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("section[aria-label='Kategorier']")));
         List<WebElement> categoryList = categorySection.findElements(By.tagName("article"));
@@ -115,7 +121,8 @@ public class StepDefinition {
     }
 
     @Then("User should see the {string} link in the footer with correct link text")
-    public void userShouldSeeKontaktLinkInTheFooter(String expectedLinkText) {
+    public void userShouldSeeKontaktLinkInTheFooter(String expectedLinkText) throws InterruptedException {
+        //Thread.sleep(5000);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
         //wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div[data-rt='footer-buttons']")));
@@ -126,21 +133,24 @@ public class StepDefinition {
     }
 
     @Then("User should see {string} movie in the FilmTips section")
-    public void userShouldSeeUppenbarelsenInTheFilmTips(String expectedMovie) {
+    public void userShouldSeeUppenbarelsenInTheFilmTips(String expectedMovie) throws InterruptedException {
+        //Thread.sleep(5000);
         assertTrue(driver.findElement(
                         By.xpath("//section[@aria-label='Filmtips']//f-4-2-0[contains(@id,'id-core-carousel-svtid_kyegxjd')]//article//div//a[@aria-label='" + expectedMovie + "']"))
                 .isDisplayed());
     }
 
     @Then("User should see the {string} program")
-    public void userShpuldSeeDragRaceSverigeProgram(String expectedProgram) {
+    public void userShpuldSeeDragRaceSverigeProgram(String expectedProgram) throws InterruptedException {
+        //Thread.sleep(5000);
         WebElement program = driver.findElement(By.className("sc-f1464567-0")).findElement(By.xpath("//a[@href='/fangelseexperimentet-little-scandinavia']"));
 
         assertEquals(expectedProgram, program.getAttribute("aria-label"));
     }
 
     @Then("User should see {int} items in recommendation rail")
-    public void userShouldSeeValidNumberOfItemsInRecommendationRail(int expectedCount) {
+    public void userShouldSeeValidNumberOfItemsInRecommendationRail(int expectedCount) throws InterruptedException {
+        //Thread.sleep(5000);
         List<WebElement> recommendations = driver.findElements(By.xpath("//section[@aria-label='Rekommenderat']//f-4-2-0[contains(@id,'id-core-carousel-recommended_start')]//article"));
         //List<WebElement> recommendations = driver.findElement(By.xpath("//section[@aria-label='Rekommenderat']")).findElement(By.cssSelector(".sc-c7947d35-4.dRNUOY")).findElements(By.tagName("article"));
 
@@ -149,7 +159,7 @@ public class StepDefinition {
 
     @When("User inputs {string} on the search form and submits")
     public void userInputsValueOnTheSearchForm(String searchTerm) throws InterruptedException {
-        Thread.sleep(2000);
+        //Thread.sleep(7000);
 
         WebElement searchField = driver.findElement(By.name("q"));
         searchField.clear();
@@ -159,7 +169,7 @@ public class StepDefinition {
     @Then("User should see {string} on the search result")
     public void userShouldSeeSearchResultOnTheSearchForm(String expectedResult) throws InterruptedException {
 
-        Thread.sleep(2000);
+        //Thread.sleep(7000);
 
         List<WebElement> searchResults = driver.findElements(By.cssSelector(".sc-9b48bf1b-1.inJkRt li"));
 
@@ -167,5 +177,6 @@ public class StepDefinition {
         assertEquals(expectedResult, searchResults.get(0).getText());
     }
 }
+
 
 
